@@ -1,16 +1,12 @@
 package com.zhx.one.base;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.zhx.one.OneApplication;
-import com.zhx.one.R;
-import com.zhx.one.utils.IntentUtils;
+import com.zhx.one.utils.UIUtils;
 
 /**
  * Author   :zhx
@@ -23,10 +19,10 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected Toolbar mToolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = this;
-        ((OneApplication) IntentUtils.getContext()).addActivity(this);
+        //((OneApplication) UIUtils.getContext()).addActivity(this);
         initData();
         initEvents();
         initView();
@@ -70,6 +66,6 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((OneApplication) IntentUtils.getContext()).removeActivity(this);
+        //((OneApplication) UIUtils.getContext()).removeActivity(this);
     }
 }

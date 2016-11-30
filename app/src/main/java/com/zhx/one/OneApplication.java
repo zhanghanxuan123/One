@@ -29,27 +29,27 @@ public class OneApplication extends Application{
         return mOneApplication;
     }
 
-    /**
+  /*  *//**
      * 添加一个Activity
      *
      * @param activity
-     */
+     *//*
     public void addActivity(BaseActivity activity) {
         activities.add(activity);
     }
 
-    /**
+    *//**
      * 结束一个Activity
      *
      * @param activity
-     */
+     *//*
     public void removeActivity(BaseActivity activity) {
         activities.remove(activity);
     }
 
-    /**
+    *//**
      * 结束当前所有Activity
-     */
+     *//*
     public static void clearActivities() {
         ListIterator<BaseActivity> iterator = activities.listIterator();
         BaseActivity activity;
@@ -61,13 +61,13 @@ public class OneApplication extends Application{
         }
     }
 
-    /**
+    *//**
      * 退出应运程序
-     */
+     *//*
     public static void quiteApplication() {
         clearActivities();
         System.exit(0);
-    }
+    }*/
 
 
 

@@ -15,13 +15,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OneRetrofit {
     final OneService mService;
-    private String OneBase1 = " ";
+    private String OneBase1 = "http://v3.wufazhuce.com:8000/api/";
     OneRetrofit() {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd")
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl(OneBase1)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();

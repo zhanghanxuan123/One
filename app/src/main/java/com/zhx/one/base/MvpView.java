@@ -5,6 +5,6 @@ package com.zhx.one.base;
  * Create at 2016/11/30
  * Description:
  */
-public class MvpView {
+public interface MvpView {
 
 }
