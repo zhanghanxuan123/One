@@ -11,7 +11,7 @@ import com.zhx.one.base.BaseActivity;
  * Create at 2016/11/30
  * Description:
  */
-public class IntentUtils {
+public class UIUtils {
 
     public static Context getContext() {
         return OneApplication.getInstance();
