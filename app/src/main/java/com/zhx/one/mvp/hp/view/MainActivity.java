@@ -96,9 +96,9 @@ List<HPIdListEntity>mIdListEntities = new ArrayList<>();
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -109,17 +109,13 @@ List<HPIdListEntity>mIdListEntities = new ArrayList<>();
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_reading) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_music) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_movie) {
 
         }
 
