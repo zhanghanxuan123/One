@@ -22,8 +22,6 @@ public class HPAdapter extends FragmentStatePagerAdapter{
     private List<String>mTitles;
     public HPAdapter(FragmentManager fm, List<BaseFragment> fragments,List<String>mTitles) {
         super(fm);
-
-        Log.d("FragmentCount", String.valueOf(fragments.size()));
         this.mFragments = fragments;
         this.mTitles = mTitles;
     }

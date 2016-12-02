@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.zhx.one.base.BaseActivity;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -18,11 +19,22 @@ public class OneApplication extends Application{
     public final static String TAG = "BaseApplication";
     private static List<BaseActivity> activities;
 
+    public List<String> getHPIdList() {
+        return mHPIdList;
+    }
+
+    public void setHPIdList(List<String> HPIdList) {
+        mHPIdList = HPIdList;
+    }
+
+    private List<String>mHPIdList;
+
     public static OneApplication mOneApplication = new OneApplication();
     @Override
     public void onCreate() {
         super.onCreate();
         activities = new LinkedList<>();
+        mHPIdList = new ArrayList<>();
     }
 
     public static OneApplication getInstance(){

@@ -2,6 +2,8 @@ package com.zhx.one.base;
 
 import com.zhx.one.data.DataManager;
 
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Author   :zhx
  * Create at 2016/11/30
@@ -12,17 +14,22 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
 
     private T mMvpView;
     public DataManager mDataManager;
+    public CompositeSubscription mCompositeSubscription;
 
 
     @Override public void attachView(T mvpView) {
         this.mMvpView = mvpView;
         this.mDataManager = DataManager.getInstance();
+        mCompositeSubscription = new CompositeSubscription();
     }
 
 
     @Override public void detachView() {
         this.mMvpView = null;
         this.mDataManager = null;
+        this.mCompositeSubscription.unsubscribe();
+        this.mCompositeSubscription = null;
+
     }
 
 

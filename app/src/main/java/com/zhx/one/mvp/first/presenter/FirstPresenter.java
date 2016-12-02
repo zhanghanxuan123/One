@@ -3,11 +3,12 @@ package com.zhx.one.mvp.first.presenter;
 import android.util.Log;
 
 import com.zhx.one.base.BasePresenter;
+import com.zhx.one.bean.HPDetailEntity;
 import com.zhx.one.bean.HPIdListEntity;
 import com.zhx.one.mvp.first.model.IFirstModel;
 import com.zhx.one.mvp.first.model.impl.FirstModelImpl;
-import com.zhx.one.mvp.first.presenter.iview.IFirstView;
-import com.zhx.one.one.OneHttp;
+import com.zhx.one.mvp.first.view.iview.FirstView;
+import com.zhx.one.mvp.hp.presenter.HPPresenter;
 
 import rx.Observable;
 import rx.Observer;
@@ -19,13 +20,13 @@ import rx.schedulers.Schedulers;
  * Create at 2016/11/30
  * Description:
  */
-public class FirstPresenter extends BasePresenter<IFirstView>{
+public class FirstPresenter extends BasePresenter<FirstView>{
 
-    private IFirstModel mIFirstModel;
+    IFirstModel mIFirstModel;
 
     public void getHPIdList(){
-
-        Observable<HPIdListEntity>observable = mDataManager.mFirstModel.getHPIdList();
+        mIFirstModel = FirstModelImpl.getInstance();
+        Observable<HPIdListEntity>observable = mIFirstModel.getHPIdList();
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<HPIdListEntity>() {
@@ -43,12 +44,8 @@ public class FirstPresenter extends BasePresenter<IFirstView>{
 
                     @Override
                     public void onNext(HPIdListEntity hpIdListEntity) {
-                        if(FirstPresenter.this.getMvpView() != null){
-                            FirstPresenter.this.getMvpView().onGetDataSuccess(hpIdListEntity);
-                        }
+                        getMvpView().onGetDataSuccess(hpIdListEntity);
                     }
                 });
     }
-
-
 }

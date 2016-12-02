@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zhx.one.OneApplication;
 import com.zhx.one.R;
 import com.zhx.one.base.BaseFragment;
 import com.zhx.one.mvp.hp.view.MainActivity;
@@ -30,38 +31,35 @@ import butterknife.ButterKnife;
  * Create at 2016/12/1
  * Description: 首页
  */
-public class HPFragment extends BaseFragment {
+public class HPFragment extends BaseFragment{
 
 
-    //@BindView(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    //@BindView(R.id.tabLayout)
+    @BindView(R.id.tabLayout)
     TabLayout mTabLayout;
-    //@BindView(R.id.viewPager)
+    @BindView(R.id.viewPager)
     ViewPager mViewPager;
-    //@BindView(R.id.fab)
-    FloatingActionButton mFab;
 
 
     private List<BaseFragment> mFragments;
     private List<String>mTitles;
+    private List<String>mHPIdList;
+
+    OneApplication oneApplication;
 
     public static HPFragment newInstance() {
 
         Bundle args = new Bundle();
 
         HPFragment mFragment = new HPFragment();
-        mFragment.setArguments(args);
+        //mFragment.setArguments(args);
         return mFragment;
     }
 
     @Override
     protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_hp, container, false);
-        mViewPager = (ViewPager) mRootView.findViewById(R.id.viewPager);
-        mTabLayout = (TabLayout) mRootView.findViewById(R.id.tabLayout);
-        mToolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
-        //mFab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
         Log.d(TAG,"initRootView");
 
     }
@@ -72,8 +70,17 @@ public class HPFragment extends BaseFragment {
     }
 
     @Override
-    protected void initData(boolean isSavedNull) {
+    protected void initData() {
         Log.d(TAG,"initData");
+        mFragments = new ArrayList<>();
+        mTitles = new ArrayList<>();
+        mHPIdList = new ArrayList<>();
+
+        //mHPIdList.addAll(oneApplication.getHPIdList());
+        /*for (int i = 0; i < 5; i++) {
+            Log.d(TAG,oneApplication.getHPIdList().get(i));
+        }*/
+        //Log.i(TAG, String.valueOf(mHPIdList.size()));
     }
 
     @Override
@@ -82,25 +89,24 @@ public class HPFragment extends BaseFragment {
         Log.d(TAG,"onActivityCreated");
         init();
         ((MainActivity) getActivity()).setToolbar(mToolbar);
-        //((MainActivity) getActivity()).setFab(mFab);
     }
 
     private void init() {
         Log.d(TAG,"init");
-        mFragments = new ArrayList<>();
-        mTitles = new ArrayList<>();
+        oneApplication = (OneApplication) getActivity().getApplication();
+        for (int i = 0; i < 5; i++) {
+            //Log.d(TAG,oneApplication.getHPIdList().get(i));
+        }
+        for (int i = 0; i <5 ; i++) {
+            mFragments.add(OneFragment.newInstance(oneApplication.getHPIdList().get(i)));
+            //Log.i(TAG, String.valueOf(OneFragment.newInstance(mHPIdList.get(i))));
+        }
         mTitles.add("one");
         mTitles.add("two");
         mTitles.add("three");
         mTitles.add("four");
         mTitles.add("five");
-        mFragments.add(OneFragment.newInstance("one"));
-        mFragments.add(OneFragment.newInstance("two"));
-        mFragments.add(OneFragment.newInstance("three"));
-        mFragments.add(OneFragment.newInstance("four"));
-        mFragments.add(OneFragment.newInstance("five"));
-        //HPAdapter hpAdapter = new HPAdapter(getChildFragmentManager(),mFragments,mTitles);
-        //mViewPager.setAdapter(hpAdapter);
+
         mViewPager.setAdapter(new HPAdapter(getChildFragmentManager(),mFragments,mTitles));
         mViewPager.setOffscreenPageLimit(5);
         mViewPager.setCurrentItem(0);

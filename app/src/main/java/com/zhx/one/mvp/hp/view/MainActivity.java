@@ -26,6 +26,9 @@ import com.zhx.one.mvp.movie.view.MovieFragment;
 import com.zhx.one.mvp.music.view.MusicFragment;
 import com.zhx.one.mvp.read.view.ReadFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -47,6 +50,7 @@ public class MainActivity extends BaseActivity
     private PopupWindow mPopupWindow;
     //private SearchViewHolder holder;
     private long lastTime = 0;
+    List<String>mHPIdList;
 
 
     @Override
@@ -54,8 +58,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        /*mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavView = (NavigationView) findViewById(R.id.nav_view);*/
+
         if (fragmentManager == null) {
             fragmentManager = getSupportFragmentManager();
         }
@@ -128,7 +131,9 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void initEvents() {
-
+        mHPIdList = new ArrayList<>();
+        /*mHPIdList = (List<String>) getIntent().getSerializableExtra("HPIdList");
+        Log.i(TAG,mHPIdList.get(0).toString());*/
     }
 
     @Override
