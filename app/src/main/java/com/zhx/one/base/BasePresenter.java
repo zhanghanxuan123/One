@@ -12,6 +12,7 @@ import rx.subscriptions.CompositeSubscription;
 
 public class BasePresenter<T extends MvpView> implements Presenter<T> {
 
+    protected final String TAG = getClass().getName();
     private T mMvpView;
     public DataManager mDataManager;
     public CompositeSubscription mCompositeSubscription;

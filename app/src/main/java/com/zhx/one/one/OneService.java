@@ -2,6 +2,7 @@ package com.zhx.one.one;
 
 import com.zhx.one.bean.HPDetailEntity;
 import com.zhx.one.bean.HPIdListEntity;
+import com.zhx.one.bean.ReadingListEntity;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -20,5 +21,6 @@ public interface OneService {
      @GET("hp/detail/{id}?version=3.5.0&platform=android")
      Observable<HPDetailEntity>getHPDetail(@Path("id")String id);
 
-
+     @GET("reading/index/?version=3.5.0&platform=android")
+     Observable<ReadingListEntity>getReadingList();
 }

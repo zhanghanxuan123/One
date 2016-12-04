@@ -19,8 +19,13 @@ import com.zhx.one.R;
 import com.zhx.one.base.BaseFragment;
 import com.zhx.one.mvp.hp.view.MainActivity;
 import com.zhx.one.mvp.hp.view.adpter.HPAdapter;
+import com.zhx.one.utils.DateUtils;
+import com.zhx.one.utils.UIUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,7 +49,6 @@ public class HPFragment extends BaseFragment{
 
     private List<BaseFragment> mFragments;
     private List<String>mTitles;
-    private List<String>mHPIdList;
 
     OneApplication oneApplication;
 
@@ -74,7 +78,6 @@ public class HPFragment extends BaseFragment{
         Log.d(TAG,"initData");
         mFragments = new ArrayList<>();
         mTitles = new ArrayList<>();
-        mHPIdList = new ArrayList<>();
 
         //mHPIdList.addAll(oneApplication.getHPIdList());
         /*for (int i = 0; i < 5; i++) {
@@ -89,26 +92,20 @@ public class HPFragment extends BaseFragment{
         Log.d(TAG,"onActivityCreated");
         init();
         ((MainActivity) getActivity()).setToolbar(mToolbar);
+        //mToolbar.setTitle(R.string.hp_title);
     }
 
     private void init() {
         Log.d(TAG,"init");
         oneApplication = (OneApplication) getActivity().getApplication();
-        for (int i = 0; i < 5; i++) {
-            //Log.d(TAG,oneApplication.getHPIdList().get(i));
-        }
-        for (int i = 0; i <5 ; i++) {
+        for (int i = 0; i <7 ; i++) {
             mFragments.add(OneFragment.newInstance(oneApplication.getHPIdList().get(i)));
+            mTitles.add(DateUtils.getWeek(i));
             //Log.i(TAG, String.valueOf(OneFragment.newInstance(mHPIdList.get(i))));
         }
-        mTitles.add("one");
-        mTitles.add("two");
-        mTitles.add("three");
-        mTitles.add("four");
-        mTitles.add("five");
 
         mViewPager.setAdapter(new HPAdapter(getChildFragmentManager(),mFragments,mTitles));
-        mViewPager.setOffscreenPageLimit(5);
+        mViewPager.setOffscreenPageLimit(7);
         mViewPager.setCurrentItem(0);
         mTabLayout.setupWithViewPager(mViewPager);
     }

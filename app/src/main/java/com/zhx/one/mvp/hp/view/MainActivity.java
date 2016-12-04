@@ -1,5 +1,6 @@
 package com.zhx.one.mvp.hp.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,7 @@ import android.widget.PopupWindow;
 import com.zhx.one.R;
 import com.zhx.one.base.BaseActivity;
 import com.zhx.one.base.BaseFragment;
+import com.zhx.one.base.Main2Activity;
 import com.zhx.one.mvp.movie.view.MovieFragment;
 import com.zhx.one.mvp.music.view.MusicFragment;
 import com.zhx.one.mvp.read.view.ReadFragment;
@@ -146,6 +148,7 @@ public class MainActivity extends BaseActivity
             }
             if (!(currentFragment instanceof HPFragment)) {
                 switchContent(currentFragment, HPFragment.newInstance());
+
                 return;
             }
             if ((System.currentTimeMillis() - lastTime) > EXIT_APP_DELAY) {
@@ -296,6 +299,7 @@ public class MainActivity extends BaseActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
             //showSearchView();
+            //startActivity(new Intent(MainActivity.this, Main2Activity.class));
             return true;
         }
         currentFragment.onOptionsItemSelected(item);
