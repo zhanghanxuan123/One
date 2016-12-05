@@ -3,10 +3,14 @@ package com.zhx.one.mvp.read.presenter;
 import android.util.Log;
 
 import com.zhx.one.base.BasePresenter;
+import com.zhx.one.bean.EssayDetailEntity;
 import com.zhx.one.bean.ReadingListEntity;
 import com.zhx.one.mvp.read.model.IReadModel;
 import com.zhx.one.mvp.read.model.impl.ReadModelImpl;
+import com.zhx.one.mvp.read.view.adapter.ReadDetailAdapter;
+import com.zhx.one.mvp.read.view.iview.ReadDetailView;
 import com.zhx.one.mvp.read.view.iview.ReadListView;
+import com.zhx.one.one.OneHttp;
 
 import rx.Observable;
 import rx.Observer;
@@ -43,9 +47,11 @@ public class ReadPresenter extends BasePresenter<ReadListView>{
 
                     @Override
                     public void onNext(ReadingListEntity entity) {
-                        Log.i(TAG,entity.getData().getEssay().get(0).getGuide_word());
+                        //Log.i(TAG,entity.getData().getEssay().get(0).getGuide_word());
                         getMvpView().getReadListSuccess(entity);
                     }
                 });
     }
+
+
 }

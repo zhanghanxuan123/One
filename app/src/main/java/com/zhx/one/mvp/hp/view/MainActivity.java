@@ -299,7 +299,7 @@ public class MainActivity extends BaseActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
             //showSearchView();
-            //startActivity(new Intent(MainActivity.this, Main2Activity.class));
+            startActivity(new Intent(MainActivity.this, Main2Activity.class));
             return true;
         }
         currentFragment.onOptionsItemSelected(item);

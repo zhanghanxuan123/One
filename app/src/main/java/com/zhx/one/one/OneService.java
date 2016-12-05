@@ -1,8 +1,11 @@
 package com.zhx.one.one;
 
+import com.zhx.one.bean.EssayDetailEntity;
 import com.zhx.one.bean.HPDetailEntity;
 import com.zhx.one.bean.HPIdListEntity;
+import com.zhx.one.bean.QuestionDetailEntity;
 import com.zhx.one.bean.ReadingListEntity;
+import com.zhx.one.bean.SerialDetailEntity;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -23,4 +26,15 @@ public interface OneService {
 
      @GET("reading/index/?version=3.5.0&platform=android")
      Observable<ReadingListEntity>getReadingList();
+
+     @GET("essay/{id}?version=3.5.0&platform=android")
+     Observable<EssayDetailEntity>getEssayDetail(@Path("id")String id);
+
+
+     @GET("serialcontent/{id}?version=3.5.0&platform=android")
+     Observable<SerialDetailEntity>getSerialDetail(@Path("id")String id);
+
+     @GET("question/{id}?version=3.5.0&platform=android")
+     Observable<QuestionDetailEntity>getQuestionDetail(@Path("id")String id);
+
 }

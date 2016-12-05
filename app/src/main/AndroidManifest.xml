@@ -31,6 +31,16 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".base.Main2Activity">
         </activity>
+        <activity
+            android:name=".mvp.read.view.EssayDetailActivity"
+            android:label="@string/title_activity_essay_detail"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".base.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

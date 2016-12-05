@@ -1,5 +1,6 @@
 package com.zhx.one.mvp.read.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -73,7 +74,7 @@ public class ReadListFragment02 extends BaseFragment implements ReadListView {
     }
 
     @Override
-    public void getReadListSuccess(ReadingListEntity entity) {
+    public void getReadListSuccess(final ReadingListEntity entity) {
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new ReadListAdapter02(getContext(),entity.getData().getSerial());
         mRecyclerview.setAdapter(mAdapter);
@@ -82,7 +83,10 @@ public class ReadListFragment02 extends BaseFragment implements ReadListView {
         mAdapter.setOnItemClickLitener(new ReadListAdapter02.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(),"您点击了"+String.valueOf(position),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(),EssayDetailActivity.class);
+                intent.putExtra("id",entity.getData().getSerial().get(position).getId());
+                intent.putExtra("type","serial");
+                startActivity(intent);
             }
         });
     }
