@@ -1,12 +1,13 @@
 package com.zhx.one.mvp.read.model.impl;
 
+import com.google.gson.JsonObject;
 import com.zhx.one.bean.EssayDetailEntity;
 import com.zhx.one.bean.QuestionDetailEntity;
 import com.zhx.one.bean.ReadingListEntity;
 import com.zhx.one.bean.SerialDetailEntity;
-import com.zhx.one.mvp.hp.model.impl.HPModelImpl;
 import com.zhx.one.mvp.read.model.IReadModel;
 import com.zhx.one.one.OneHttp;
+
 
 import rx.Observable;
 
@@ -42,5 +43,10 @@ public class ReadModelImpl implements IReadModel {
     @Override
     public Observable<QuestionDetailEntity> getQuestionDetail(String id) {
         return OneHttp.getServiceInstance().getQuestionDetail(id);
+    }
+
+    @Override
+    public Observable<JsonObject> getComment(String type, String id) {
+        return OneHttp.getServiceInstance().getComment(type,id);
     }
 }

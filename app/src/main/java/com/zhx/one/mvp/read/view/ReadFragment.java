@@ -63,9 +63,7 @@ public class ReadFragment extends BaseFragment{
     }
 
     @Override
-    protected void initData() {
-        mFragments = new ArrayList<>();
-        mTitles = new ArrayList<>();
+    protected void initData(boolean isSavedNull) {
 
     }
 
@@ -78,6 +76,8 @@ public class ReadFragment extends BaseFragment{
     }
 
     private void init() {
+        mFragments = new ArrayList<>();
+        mTitles = new ArrayList<>();
         mFragments.add(ReadListFragment.newInstance());
         mFragments.add(ReadListFragment02.newInstance());
         mFragments.add(ReadListFragment03.newInstance());
@@ -89,13 +89,5 @@ public class ReadFragment extends BaseFragment{
         mViewPager.setCurrentItem(0);
         mTabLayout.setupWithViewPager(mViewPager);
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
     }
 }

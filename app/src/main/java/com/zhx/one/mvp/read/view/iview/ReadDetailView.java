@@ -1,6 +1,7 @@
 package com.zhx.one.mvp.read.view.iview;
 
 import com.zhx.one.base.MvpView;
+import com.zhx.one.bean.CommentEntity;
 import com.zhx.one.bean.EssayDetailEntity;
 import com.zhx.one.bean.QuestionDetailEntity;
 import com.zhx.one.bean.SerialDetailEntity;
@@ -11,4 +12,6 @@ import com.zhx.one.bean.SerialDetailEntity;
 
 public interface ReadDetailView extends MvpView{
     void getDetailSuccess(String type, EssayDetailEntity essayDetailEntity, SerialDetailEntity serialDetailEntity, QuestionDetailEntity questionDetailEntity);
+
+    void getCommentSuccess(String type,CommentEntity commentEntity);
 }

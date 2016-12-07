@@ -61,7 +61,7 @@ public class ReadListFragment02 extends BaseFragment implements ReadListView {
     }
 
     @Override
-    protected void initData() {
+    protected void initData(boolean isSavedNull) {
         
     }
 

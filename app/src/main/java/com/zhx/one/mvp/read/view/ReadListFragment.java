@@ -2,19 +2,25 @@ package com.zhx.one.mvp.read.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.zhx.one.R;
 import com.zhx.one.base.BaseFragment;
+import com.zhx.one.bean.EssayDetailEntity;
 import com.zhx.one.bean.ReadingListEntity;
 import com.zhx.one.mvp.read.presenter.ReadPresenter;
 import com.zhx.one.mvp.read.view.adapter.ReadListAdapter;
 import com.zhx.one.mvp.read.view.iview.ReadListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,24 +38,26 @@ public class ReadListFragment extends BaseFragment implements ReadListView{
     RecyclerView mRecyclerview;
     private ReadingListEntity mReadingListEntity;
     private ReadPresenter mReaderPresenter;
+    private List<ReadingListEntity.DataBean.EssayBean>mList;
+    Boolean isSave = false;
+    Bundle savedState;
+    private int listPosition;
 
     public static ReadListFragment newInstance() {
 
         Bundle args = new Bundle();
-        //args.putSerializable("ReadingListEntity", readingListEntity);
         ReadListFragment readListFragment = new ReadListFragment();
         readListFragment.setArguments(args);
         return readListFragment;
+
     }
 
     @Override
     protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_readlist, container, false);
-        /*mReadingListEntity = (ReadingListEntity) getArguments().getSerializable("ReadingListEntity");
-        if (mReadingListEntity != null) {
-            init();
-        }*/
-
+        if (savedInstanceState != null) {
+            listPosition = savedInstanceState.getInt("listPosition");
+        }
     }
 
     @Override
@@ -57,36 +65,60 @@ public class ReadListFragment extends BaseFragment implements ReadListView{
         mReaderPresenter = new ReadPresenter();
         mReaderPresenter.attachView(this);
         mReaderPresenter.getReadList();
+        init();
     }
 
     @Override
-    protected void initData() {
-        
+    protected void initData(boolean isSavedNull) {
+        if (isSavedNull){
+            initEvents();
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        /*if (!restoreStateFromArguments()){
+            init();
+        }else {
+            restoreState();
+        }*/
     }
 
-    @Override
-    public void getReadListSuccess(final ReadingListEntity entity) {
+    private void init() {
+        mList =new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new ReadListAdapter(getContext(),entity.getData().getEssay());
+        mAdapter = new ReadListAdapter(getContext(),mList);
         mRecyclerview.setAdapter(mAdapter);
+        mRecyclerview.smoothScrollToPosition(listPosition);
         mRecyclerview.setLayoutManager(mLinearLayoutManager);
         mRecyclerview.setHasFixedSize(true);
         mAdapter.setOnItemClickLitener(new ReadListAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getActivity(),EssayDetailActivity.class);
-                intent.putExtra("id",entity.getData().getEssay().get(position).getContent_id());
+                intent.putExtra("id",mList.get(position).getContent_id());
                 intent.putExtra("type","essay");
                 startActivity(intent);
             }
         });
     }
+
+
+    @Override
+    public void getReadListSuccess(final ReadingListEntity entity) {
+        mList.addAll(entity.getData().getEssay());
+        Log.i(TAG, String.valueOf(mList.size()));
+        mAdapter.notifyDataSetChanged();
+        isSave = true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("listPosition", mLinearLayoutManager.findLastVisibleItemPosition());
+        super.onSaveInstanceState(outState);
+    }
+
+
+
 }

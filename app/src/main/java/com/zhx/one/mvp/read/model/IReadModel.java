@@ -1,9 +1,12 @@
 package com.zhx.one.mvp.read.model;
 
+import com.google.gson.JsonObject;
+import com.zhx.one.bean.CommentEntity;
 import com.zhx.one.bean.EssayDetailEntity;
 import com.zhx.one.bean.QuestionDetailEntity;
 import com.zhx.one.bean.ReadingListEntity;
 import com.zhx.one.bean.SerialDetailEntity;
+
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -21,4 +24,6 @@ public interface IReadModel {
     Observable<SerialDetailEntity>getSerialDetail(String id);
 
     Observable<QuestionDetailEntity>getQuestionDetail(String id);
+
+    Observable<JsonObject> getComment(String type, String id);
 }

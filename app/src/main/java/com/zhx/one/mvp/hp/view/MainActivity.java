@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        Log.i(TAG+"onCreate", String.valueOf(currentFragment));
         if (fragmentManager == null) {
             fragmentManager = getSupportFragmentManager();
         }
@@ -68,8 +68,10 @@ public class MainActivity extends BaseActivity
             currentFragment = HPFragment.newInstance();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.fm_content, currentFragment).commit();
+            Log.i(TAG,"savedInstanceState == null");
         } else {
             //activity销毁后记住销毁前所在页面
+            Log.i(TAG,"销毁后记住销毁前所在页面");
             currentIndex = savedInstanceState.getInt("currentIndex");
             switch (this.currentIndex) {
                 case 0:
@@ -289,7 +291,6 @@ public class MainActivity extends BaseActivity
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -368,6 +369,7 @@ public class MainActivity extends BaseActivity
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt("currentIndex", currentIndex);
         super.onSaveInstanceState(outState);
+        Log.i(TAG,"onSaveInstanceState");
     }
 
 

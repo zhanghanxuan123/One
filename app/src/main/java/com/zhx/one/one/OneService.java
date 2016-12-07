@@ -1,5 +1,7 @@
 package com.zhx.one.one;
 
+import com.google.gson.JsonObject;
+import com.zhx.one.bean.CommentEntity;
 import com.zhx.one.bean.EssayDetailEntity;
 import com.zhx.one.bean.HPDetailEntity;
 import com.zhx.one.bean.HPIdListEntity;
@@ -7,6 +9,8 @@ import com.zhx.one.bean.QuestionDetailEntity;
 import com.zhx.one.bean.ReadingListEntity;
 import com.zhx.one.bean.SerialDetailEntity;
 
+
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -36,5 +40,8 @@ public interface OneService {
 
      @GET("question/{id}?version=3.5.0&platform=android")
      Observable<QuestionDetailEntity>getQuestionDetail(@Path("id")String id);
+
+     @GET("comment/praiseandtime/{read_type}/{id}/0?version=3.5.0&platform=android")
+     Observable<JsonObject>getComment(@Path("read_type")String type, @Path("id")String id);
 
 }

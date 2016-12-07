@@ -75,13 +75,13 @@ public class OneFragment extends BaseFragment implements HPView {
     }
 
     @Override
-    protected void initData() {
+    protected void initData(boolean isSavedNull) {
         mHPPresenter = new HPPresenter();
         mHPPresenter.attachView(this);
         //Log.i(TAG, "initData" + num);
         mHPPresenter.getHPDetail(num);
-        //mHPPresenter.getHPIdList();
     }
+
 
 
     @Override

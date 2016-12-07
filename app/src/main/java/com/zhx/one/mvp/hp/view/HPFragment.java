@@ -45,6 +45,7 @@ public class HPFragment extends BaseFragment{
     TabLayout mTabLayout;
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
+    private int listPosition;
 
 
     private List<BaseFragment> mFragments;
@@ -57,7 +58,7 @@ public class HPFragment extends BaseFragment{
         Bundle args = new Bundle();
 
         HPFragment mFragment = new HPFragment();
-        //mFragment.setArguments(args);
+        mFragment.setArguments(args);
         return mFragment;
     }
 
@@ -74,17 +75,20 @@ public class HPFragment extends BaseFragment{
     }
 
     @Override
-    protected void initData() {
+    protected void initData(boolean isSavedNull) {
         Log.d(TAG,"initData");
         mFragments = new ArrayList<>();
         mTitles = new ArrayList<>();
+    }
+
+
 
         //mHPIdList.addAll(oneApplication.getHPIdList());
         /*for (int i = 0; i < 5; i++) {
             Log.d(TAG,oneApplication.getHPIdList().get(i));
         }*/
         //Log.i(TAG, String.valueOf(mHPIdList.size()));
-    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

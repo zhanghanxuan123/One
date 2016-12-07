@@ -1,49 +1,50 @@
 package com.zhx.one.base;
 
-import android.support.v7.app.AppCompatActivity;
+import android.nfc.Tag;
 import android.os.Bundle;
-import android.webkit.WebView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.zhx.one.R;
-import com.zhx.one.bean.EssayDetailEntity;
-import com.zhx.one.bean.HPDetailEntity;
-import com.zhx.one.one.OneHttp;
+import com.zhx.one.mvp.read.view.adapter.ReadDetailAdapter;
+import com.zhx.one.widget.MyLinearLayoutManager;
 
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class Main2Activity extends AppCompatActivity {
-    WebView mWebView;
+
+    @BindView(R.id.recyclerview)
+    RecyclerView mRecyclerview;
+    private List<String> mList;
+    private ReadDetailAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        final EssayDetailEntity essayDetailEntity;
-        mWebView = (WebView) findViewById(R.id.webview);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl("http://m.wufazhuce.com/article/1618");
-        /*Observable<EssayDetailEntity> observable = OneHttp.getServiceInstance().getEssayDetail("1618");
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<EssayDetailEntity>() {
-                    @Override
-                    public void onCompleted() {
+        ButterKnife.bind(this);
+        /*mList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            mList.add("这是一条评论");
+            //Log.i("Dasd","da");
+        }
+        //mLinearLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new ReadDetailAdapter(this, mList);
+        MyLinearLayoutManager mFullyLinearLayoutManager = new MyLinearLayoutManager(this, LinearLayout.VERTICAL, true);
+        mFullyLinearLayoutManager.setSmoothScrollbarEnabled(true);
+        mRecyclerview.setAdapter(mAdapter);
+        mRecyclerview.setLayoutManager(mFullyLinearLayoutManager);
+        mRecyclerview.setHasFixedSize(true);
+        mRecyclerview.setNestedScrollingEnabled(false);*/
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(EssayDetailEntity essayDetailEntity) {
-                        mWebView.loadData(essayDetailEntity.getData().getHp_content(),"text/html; charset=UTF-8", null);
-                    }
-                });*/
 
 
     }

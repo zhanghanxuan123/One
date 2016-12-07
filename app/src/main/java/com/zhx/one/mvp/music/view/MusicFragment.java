@@ -33,7 +33,7 @@ public class MusicFragment extends BaseFragment{
     }
 
     @Override
-    protected void initData() {
+    protected void initData(boolean isSavedNull) {
 
     }
 }
