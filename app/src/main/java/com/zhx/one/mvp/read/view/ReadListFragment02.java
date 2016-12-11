@@ -2,8 +2,10 @@ package com.zhx.one.mvp.read.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,9 @@ import com.zhx.one.mvp.read.view.adapter.ReadListAdapter;
 import com.zhx.one.mvp.read.view.adapter.ReadListAdapter02;
 import com.zhx.one.mvp.read.view.iview.ReadListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,12 +30,15 @@ import butterknife.ButterKnife;
  * Create at 2016/12/4
  * Description:
  */
-public class ReadListFragment02 extends BaseFragment implements ReadListView {
+public class ReadListFragment02 extends BaseFragment implements ReadListView, SwipeRefreshLayout.OnRefreshListener {
 
     LinearLayoutManager mLinearLayoutManager;
     ReadListAdapter02 mAdapter;
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerview;
+    @BindView(R.id.swipe_refresh_widget)
+    SwipeRefreshLayout mSwipeRefreshWidget;
+    private List<ReadingListEntity.DataBean.SerialBean> mList;
     private ReadingListEntity mReadingListEntity;
     private ReadPresenter mReaderPresenter;
 
@@ -57,7 +65,25 @@ public class ReadListFragment02 extends BaseFragment implements ReadListView {
     protected void initEvents() {
         mReaderPresenter = new ReadPresenter();
         mReaderPresenter.attachView(this);
-        mReaderPresenter.getReadList();
+        //mReaderPresenter.getReadList();
+        mList = new ArrayList<>();
+        mSwipeRefreshWidget.setColorSchemeResources(R.color.recycler_color1, R.color.recycler_color2,
+                R.color.recycler_color3, R.color.recycler_color4);
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mAdapter = new ReadListAdapter02(getContext(), mList);
+        mRecyclerview.setAdapter(mAdapter);
+        mRecyclerview.setLayoutManager(mLinearLayoutManager);
+        mRecyclerview.setHasFixedSize(true);
+        mAdapter.setOnItemClickLitener(new ReadListAdapter02.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), EssayDetailActivity.class);
+                intent.putExtra("id", mList.get(position).getSerial_id());
+                intent.putExtra("type", "essay");
+                startActivity(intent);
+            }
+        });
+        mSwipeRefreshWidget.setOnRefreshListener(this);
     }
 
     @Override
@@ -75,19 +101,15 @@ public class ReadListFragment02 extends BaseFragment implements ReadListView {
 
     @Override
     public void getReadListSuccess(final ReadingListEntity entity) {
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new ReadListAdapter02(getContext(),entity.getData().getSerial());
-        mRecyclerview.setAdapter(mAdapter);
-        mRecyclerview.setLayoutManager(mLinearLayoutManager);
-        mRecyclerview.setHasFixedSize(true);
-        mAdapter.setOnItemClickLitener(new ReadListAdapter02.OnItemClickLitener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(),EssayDetailActivity.class);
-                intent.putExtra("id",entity.getData().getSerial().get(position).getId());
-                intent.putExtra("type","serial");
-                startActivity(intent);
-            }
-        });
+        mList.clear();
+        mList.addAll(entity.getData().getSerial());
+        //Log.i(TAG, String.valueOf(mList.size()));
+        mAdapter.notifyDataSetChanged();
+        mSwipeRefreshWidget.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        mReaderPresenter.getReadList();
     }
 }

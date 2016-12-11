@@ -1,11 +1,13 @@
 package com.zhx.one.bean;
 
+import java.io.Serializable;
+
 /**
  * Author   :zhx
  * Create at 2016/11/30
  * Description: 首页文章详情
  */
-public class HPDetailEntity {
+public class HPDetailEntity implements Serializable {
 
     /**
      * res : 0

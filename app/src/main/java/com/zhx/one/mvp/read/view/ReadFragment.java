@@ -46,7 +46,6 @@ public class ReadFragment extends BaseFragment{
     public static ReadFragment newInstance() {
 
         Bundle args = new Bundle();
-
         ReadFragment mFragment = new ReadFragment();
         mFragment.setArguments(args);
         return mFragment;

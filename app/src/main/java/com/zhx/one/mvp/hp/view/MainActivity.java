@@ -24,6 +24,8 @@ import com.zhx.one.R;
 import com.zhx.one.base.BaseActivity;
 import com.zhx.one.base.BaseFragment;
 import com.zhx.one.base.Main2Activity;
+import com.zhx.one.bean.HPIdListEntity;
+import com.zhx.one.bean.ReadingListEntity;
 import com.zhx.one.mvp.movie.view.MovieFragment;
 import com.zhx.one.mvp.music.view.MusicFragment;
 import com.zhx.one.mvp.read.view.ReadFragment;
@@ -52,37 +54,48 @@ public class MainActivity extends BaseActivity
     private PopupWindow mPopupWindow;
     //private SearchViewHolder holder;
     private long lastTime = 0;
-    List<String>mHPIdList;
-
+    HPIdListEntity mIdListEntity;
+    private HPFragment mHPFragment;
+    private ReadFragment mReadFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Log.i(TAG+"onCreate", String.valueOf(currentFragment));
+        //mIdListEntity = (HPIdListEntity)getIntent().getSerializableExtra("HPIdList");
+        //Log.i(TAG,"onCreate"+mIdListEntity.getData().get(0));
         if (fragmentManager == null) {
             fragmentManager = getSupportFragmentManager();
         }
+        //selectFragment(R.id.nav_home);
+        //currentFragment = HPFragment.newInstance(mIdListEntity);
         if (savedInstanceState == null) {
-            currentFragment = HPFragment.newInstance();
+            //selectFragment(0);
+            mHPFragment=HPFragment.newInstance();
             FragmentTransaction ft = fragmentManager.beginTransaction();
-            ft.replace(R.id.fm_content, currentFragment).commit();
+            ft.replace(R.id.fm_content, mHPFragment).commit();
+            currentFragment = mHPFragment;
             Log.i(TAG,"savedInstanceState == null");
         } else {
             //activity销毁后记住销毁前所在页面
             Log.i(TAG,"销毁后记住销毁前所在页面");
+            //mIdListEntity = (HPIdListEntity) savedInstanceState.getSerializable("IdListEntit");
             currentIndex = savedInstanceState.getInt("currentIndex");
-            switch (this.currentIndex) {
+            switch (currentIndex) {
                 case 0:
                     if (currentFragment == null) {
+                        Log.i(TAG," HPFragment == null");
                         currentFragment = HPFragment.newInstance();
+
                     }
                     switchContent(null, currentFragment);
                     break;
                 case 1:
                     if (currentFragment == null) {
+                        Log.i(TAG," ReadFragment == null");
                         currentFragment = ReadFragment.newInstance();
+
                     }
                     switchContent(null, currentFragment);
                     break;
@@ -108,36 +121,9 @@ public class MainActivity extends BaseActivity
         super.onResume();
     }
 
-    private void initNavView() {
-        /*boolean night = SPUtils.getPrefBoolean(Constant.THEME_MODEL, false);
-        if (night) {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-        MenuItem item = mNavigationView.getMenu().findItem(R.id.nav_theme);
-        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
-        mThemeSwitch = (SwitchCompat) MenuItemCompat.getActionView(item).findViewById(R.id.view_switch);
-        mThemeSwitch.setChecked(night);
-        mThemeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SPUtils.setPrefBoolean(Constant.THEME_MODEL, isChecked);
-                mThemeSwitch.setChecked(isChecked);
-                if (isChecked) {
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }
-        });*/
-    }
 
     @Override
     protected void initEvents() {
-        mHPIdList = new ArrayList<>();
-        /*mHPIdList = (List<String>) getIntent().getSerializableExtra("HPIdList");
-        Log.i(TAG,mHPIdList.get(0).toString());*/
     }
 
     @Override
@@ -148,11 +134,11 @@ public class MainActivity extends BaseActivity
             if (currentFragment == null) {
                 currentFragment = HPFragment.newInstance();
             }
-            if (!(currentFragment instanceof HPFragment)) {
+            /*if (!(currentFragment instanceof HPFragment)) {
                 switchContent(currentFragment, HPFragment.newInstance());
 
                 return;
-            }
+            }*/
             if ((System.currentTimeMillis() - lastTime) > EXIT_APP_DELAY) {
                 Snackbar.make(mDrawerLayout, "再次返回退出", Snackbar.LENGTH_SHORT).show();
                 lastTime = System.currentTimeMillis();
@@ -187,89 +173,6 @@ public class MainActivity extends BaseActivity
             }
         });
     }
-
-    /**
-     * 搜索框
-     */
-    /*public void showSearchView() {
-        final WindowManager.LayoutParams lp = getWindow().getAttributes();
-        if (mPopupWindow == null) {
-            holder = new SearchViewHolder(this, code -> {
-                switch (code) {
-                    case SearchViewHolder.RESULT_SEARCH_EMPTY_KEYWORD:
-                        Snackbar.make(drawer, R.string.keyword_is_empty, Snackbar.LENGTH_SHORT).show();
-                        break;
-                    case SearchViewHolder.RESULT_SEARCH_SEARCH:
-                        String q = holder.et_search_content.getText().toString();
-                        if (q.startsWith("@")) {
-                            CustomTabActivityHelper.openCustomTab(
-                                    this,
-                                    new CustomTabsIntent.Builder()
-                                            .setShowTitle(true)
-                                            .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                                            .addDefaultShareMenuItem()
-                                            .build(),
-                                    Uri.parse(q.replace("@", "")));
-                        } else {
-                            Intent intent = new Intent(this, SearchResultActivity.class);
-                            intent.putExtra("q", q);
-                            startActivity(intent);
-                        }
-                        break;
-                    case SearchViewHolder.RESULT_SEARCH_GO_SCAN:
-                        if (PermissionUtils.requestCameraPermission(this)) {
-                            startActivity(new Intent(this, CaptureActivity.class));
-                        }
-                        break;
-                    case SearchViewHolder.RESULT_SEARCH_CANCEL:
-                        mPopupWindow.dismiss();
-                        break;
-                }
-            });
-            mPopupWindow = new PopupWindow(holder.getContentView(),
-                    WindowManager.LayoutParams.MATCH_PARENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT, true);
-            mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-            mPopupWindow.setFocusable(true);
-            mPopupWindow.setOutsideTouchable(true);
-            // 设置popWindow的显示和消失动画
-//                mPopupWindow.setAnimationStyle(R.style.PopupWindowStyle);
-            mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    holder.et_search_content.setText("");
-                    KeyBoardUtils.closeKeyBord(holder.et_search_content, MainActivity.this);
-                    ValueAnimator animator = ValueAnimator.ofFloat(0.7f, 1f);
-                    animator.setDuration(500);
-                    animator.addUpdateListener(animation -> {
-                        lp.alpha = (float) animation.getAnimatedValue();
-                        lp.dimAmount = (float) animation.getAnimatedValue();
-                        getWindow().setAttributes(lp);
-                        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-                    });
-                    animator.start();
-                }
-            });
-            mPopupWindow.setTouchInterceptor(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    return false;
-                }
-            });
-        }
-        KeyBoardUtils.openKeyBord(holder.et_search_content, MainActivity.this);
-        ValueAnimator animator = ValueAnimator.ofFloat(1f, 0.7f);
-        animator.setDuration(500);
-        animator.addUpdateListener(animation -> {
-            lp.alpha = (float) animation.getAnimatedValue();
-            lp.dimAmount = (float) animation.getAnimatedValue();
-            getWindow().setAttributes(lp);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        });
-        mPopupWindow.showAtLocation(mToolbar, Gravity.NO_GRAVITY, 0, ScreenUtils.getStatusHeight(activity));
-        animator.start();
-    }*/
-
     /**
      * switch fragment.
      *
@@ -278,7 +181,7 @@ public class MainActivity extends BaseActivity
      */
 
     public void switchContent(BaseFragment from, BaseFragment to) {
-        if (currentFragment == to) {
+        if (currentFragment == null) {
             return;
         } else {
             currentFragment = to;
@@ -286,9 +189,54 @@ public class MainActivity extends BaseActivity
             FragmentTransaction ft = fragmentManager.beginTransaction();
             //ft.setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out);
             ft.replace(R.id.fm_content, to).commit();
+            //hideAllFragment(ft);
+
         }
         invalidateOptionsMenu();
     }
+
+    private void selectFragment(int fragmentId) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        hideAllFragment(transaction);
+        switch (fragmentId) {
+            case 0:
+                if (mHPFragment == null) {
+                    mHPFragment = HPFragment.newInstance();
+                    // todo diff with transaction.replace() ?
+                    Log.i("selectFragment","mHPFragment == null");
+                    transaction.add(R.id.fm_content,mHPFragment);
+                } else {
+                    Log.i("selectFragment","mHPFragment != null");
+                    transaction.show(mHPFragment);
+                    //transaction.show(mHPFragment);
+                }
+                currentFragment = mHPFragment;
+                break;
+
+            case 1:
+                if (mReadFragment == null) {
+                    Log.i("selectFragment","mReadFragment == null");
+                    mReadFragment = ReadFragment.newInstance();
+                    transaction.add(R.id.fm_content, mReadFragment);
+                } else {
+                    Log.i("selectFragment","mReadFragment != null");
+                    transaction.show(mReadFragment);
+                }
+                currentFragment = mReadFragment;
+                break;
+        }
+        transaction.commit();
+    }
+
+    private void hideAllFragment(FragmentTransaction transaction) {
+        if (mHPFragment != null) {
+            transaction.hide(mHPFragment);
+        }
+        if (mReadFragment != null) {
+            transaction.hide(mReadFragment);
+        }
+    }
+
 
 
     @Override
@@ -323,6 +271,11 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -331,46 +284,37 @@ public class MainActivity extends BaseActivity
 
         if (id == R.id.nav_home) {
             Log.d(TAG,"R.id.nav_home");
-            switchContent(currentFragment, HPFragment.newInstance());
+            //switchContent(currentFragment, HPFragment.newInstance());
+            selectFragment(0);
+            currentIndex = 0;
         } else if (id == R.id.nav_reading) {
             Log.d(TAG,"R.id.nav_reading");
-            switchContent(currentFragment, ReadFragment.newInstance());
+            selectFragment(1);
+            currentIndex = 1;
+            //switchContent(currentFragment, ReadFragment.newInstance());
         } else if (id == R.id.nav_music) {
             Log.d(TAG,"R.id.nav_music");
             switchContent(currentFragment, MusicFragment.newInstance());
+            currentIndex = 2;
         } else if (id == R.id.nav_movie) {
             Log.d(TAG,"R.id.nav_movie");
             switchContent(currentFragment, MovieFragment.newInstance());
+            currentIndex = 3;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    public void showFloatingBar() {
-        if (mFab != null) {
-            mFab.show();
-        }
-    }
-
-    public void hideFloatingBar() {
-        if (mFab != null) {
-            mFab.hide();
-        }
-    }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt("currentIndex", currentIndex);
+        /*ReadingListEntity read = new ReadingListEntity();
+        read.setRes(123);
+        outState.putSerializable("IdListEntity",mIdListEntity);*/
+        outState.putInt("currentIndex",1);
         super.onSaveInstanceState(outState);
         Log.i(TAG,"onSaveInstanceState");
     }
-
 
 }

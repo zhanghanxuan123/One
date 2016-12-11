@@ -1,6 +1,7 @@
 package com.zhx.one.mvp.hp.model.impl;
 
 import com.zhx.one.bean.HPDetailEntity;
+import com.zhx.one.bean.HPIdListEntity;
 import com.zhx.one.mvp.first.model.impl.FirstModelImpl;
 import com.zhx.one.mvp.hp.model.IHPModel;
 import com.zhx.one.one.OneHttp;
@@ -22,7 +23,7 @@ public class HPModelImpl implements IHPModel{
     }
 
     @Override
-    public Observable<HPDetailEntity> getHPDetail(String id) {
-        return OneHttp.getServiceInstance().getHPDetail(id);
+    public Observable<HPIdListEntity> getHPDetail() {
+        return OneHttp.getServiceInstance().getHPIdList();
     }
 }

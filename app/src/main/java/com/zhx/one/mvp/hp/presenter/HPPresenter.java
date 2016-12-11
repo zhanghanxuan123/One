@@ -6,20 +6,18 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
-import com.bumptech.glide.request.target.Target;
 import com.zhx.one.base.BasePresenter;
 import com.zhx.one.bean.HPDetailEntity;
 import com.zhx.one.bean.HPIdListEntity;
-import com.zhx.one.mvp.first.model.IFirstModel;
 import com.zhx.one.mvp.first.model.impl.FirstModelImpl;
 import com.zhx.one.mvp.first.presenter.FirstPresenter;
+import com.zhx.one.mvp.hp.model.IHPDetailModle;
 import com.zhx.one.mvp.hp.model.IHPModel;
+import com.zhx.one.mvp.hp.model.impl.HPDetailModelImpl;
 import com.zhx.one.mvp.hp.model.impl.HPModelImpl;
+import com.zhx.one.mvp.hp.view.iview.HPDetailView;
 import com.zhx.one.mvp.hp.view.iview.HPView;
 
 import java.io.File;
@@ -40,36 +38,33 @@ import rx.schedulers.Schedulers;
  */
 public class HPPresenter extends BasePresenter<HPView>{
 
-    IFirstModel mIFirstModel;
     IHPModel mIHPModel;
+    IHPDetailModle mIHPDetailModle;
 
-    public void getHPDetail(String id){
-        mIHPModel = HPModelImpl.getInstance();
-        Observable<HPDetailEntity>observable = mIHPModel.getHPDetail(id);
+    public HPPresenter(){
+        mIHPModel= HPModelImpl.getInstance();
+        mIHPDetailModle = HPDetailModelImpl.getInstance();
+    }
+
+    public void getHPIdList(){
+
+        Observable<HPIdListEntity>observable = mIHPModel.getHPDetail();
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HPDetailEntity>() {
+                .subscribe(new Observer<HPIdListEntity>() {
                     @Override
                     public void onCompleted() {
-                        Log.i("HPPresenter","onCompleted");
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.i("HPPresenteronError",e.toString());
+
                     }
 
                     @Override
-                    public void onNext(HPDetailEntity hpDetailEntity) {
-
-                        //Log.i("sdadsada",hpDetailEntity.getData().getHp_title());
-                        if (HPPresenter.this.getMvpView()!=null){
-                            //Log.i("HPPresenter","onNext");
-                            HPPresenter.this.getMvpView().getDataSuccess(hpDetailEntity);
-                        }
-                            //getMvpView().getDataSuccess(hpDetailEntity);
-                        //
-
+                    public void onNext(HPIdListEntity hpIdListEntity) {
+                        getMvpView().onGetDataSuccess(hpIdListEntity);
                     }
                 });
     }

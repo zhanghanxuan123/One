@@ -46,9 +46,9 @@ public class FisrtActivity extends AppCompatActivity implements FirstView {
     @Override
     public void onGetDataSuccess(final HPIdListEntity hpIdListEntity) {
 
-        OneApplication oneApplication;
+       /* OneApplication oneApplication;
         oneApplication = (OneApplication) getApplication();
-        oneApplication.setHPIdList(hpIdListEntity.getData());
+        oneApplication.setHPIdList(hpIdListEntity.getData());*/
 
         Observable.timer(1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
@@ -57,10 +57,10 @@ public class FisrtActivity extends AppCompatActivity implements FirstView {
                     @Override
                     public void call(Long aLong) {
                         Intent intent = new Intent(FisrtActivity.this,MainActivity.class);
-                        /*Bundle bundle = new Bundle();
-                        bundle.putSerializable("HPIdList", (Serializable) hpIdListEntity.getData());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("HPIdList", hpIdListEntity);
                         intent.putExtras(bundle);
-                        intent.putExtra("network",true);*/
+                        intent.putExtra("network",true);
                         //UIUtils.startActivity(intent);
                         startActivity(intent);
                         finish();

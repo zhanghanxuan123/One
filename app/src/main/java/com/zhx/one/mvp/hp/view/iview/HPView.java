@@ -1,18 +1,14 @@
 package com.zhx.one.mvp.hp.view.iview;
 
 import com.zhx.one.base.MvpView;
-import com.zhx.one.bean.HPDetailEntity;
+import com.zhx.one.bean.HPIdListEntity;
 
 /**
- * Created by 张瀚漩 on 2016/11/30.
+ * Created by 张瀚漩 on 2016/12/11.
  */
 
 public interface HPView extends MvpView{
 
-    void getDataSuccess(HPDetailEntity hpDetailEntity);
-
-    void getError(String error);
-
-    void refresh();
+    void onGetDataSuccess(HPIdListEntity hpIdListEntity);
 
 }

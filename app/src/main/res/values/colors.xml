@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#1c8905</color>
     <color name="colorAccent">#FF4081</color>
     <color name="black_text">#292421</color>
+
+    <!--swipeRefreshLayout color-->
+    <color name="recycler_color1">#bc9191</color>
+    <color name="recycler_color2">#edd36a</color>
+    <color name="recycler_color3">#82c1f9</color>
+    <color name="recycler_color4">#68d661</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.zhx.one.mvp.hp.model;
 
 import com.zhx.one.bean.HPDetailEntity;
+import com.zhx.one.bean.HPIdListEntity;
 
 import rx.Observable;
 
@@ -10,7 +11,6 @@ import rx.Observable;
 
 public interface IHPModel {
 
-    Observable<HPDetailEntity>getHPDetail(String id);
-
+    Observable<HPIdListEntity>getHPDetail();
 
 }

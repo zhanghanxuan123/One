@@ -24,7 +24,7 @@ public abstract class BaseFragment extends Fragment{
         initRootView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, mRootView);
         initEvents();
-        initData(getArguments() == null);
+        initData(savedInstanceState == null);
         return mRootView;
     }
 
