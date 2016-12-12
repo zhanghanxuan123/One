@@ -83,12 +83,17 @@ public class ReadListFragment03 extends BaseFragment implements ReadListView, Sw
                 startActivity(intent);
             }
         });
+        mSwipeRefreshWidget.setRefreshing(true);
         mSwipeRefreshWidget.setOnRefreshListener(this);
     }
 
     @Override
     protected void initData(boolean isSavedNull) {
-        
+        if (isSavedNull) {
+            onRefresh();
+        }else {
+
+        }
     }
 
     @Override

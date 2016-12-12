@@ -13,11 +13,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.zhx.one.R;
@@ -25,13 +23,9 @@ import com.zhx.one.base.BaseActivity;
 import com.zhx.one.base.BaseFragment;
 import com.zhx.one.base.Main2Activity;
 import com.zhx.one.bean.HPIdListEntity;
-import com.zhx.one.bean.ReadingListEntity;
 import com.zhx.one.mvp.movie.view.MovieFragment;
 import com.zhx.one.mvp.music.view.MusicFragment;
 import com.zhx.one.mvp.read.view.ReadFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +51,7 @@ public class MainActivity extends BaseActivity
     HPIdListEntity mIdListEntity;
     private HPFragment mHPFragment;
     private ReadFragment mReadFragment;
+    private MovieFragment mMovieFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,6 +219,20 @@ public class MainActivity extends BaseActivity
                 }
                 currentFragment = mReadFragment;
                 break;
+
+            case 3:
+                if (mMovieFragment == null) {
+                    mMovieFragment = MovieFragment.newInstance();
+                    // todo diff with transaction.replace() ?
+                    Log.i("selectFragment","mHPFragment == null");
+                    transaction.add(R.id.fm_content,mMovieFragment);
+                } else {
+                    Log.i("selectFragment","mHPFragment != null");
+                    transaction.show(mMovieFragment);
+                    //transaction.show(mHPFragment);
+                }
+                currentFragment = mMovieFragment;
+                break;
         }
         transaction.commit();
     }
@@ -234,6 +243,9 @@ public class MainActivity extends BaseActivity
         }
         if (mReadFragment != null) {
             transaction.hide(mReadFragment);
+        }
+        if (mMovieFragment != null) {
+            transaction.hide(mMovieFragment);
         }
     }
 
@@ -259,13 +271,13 @@ public class MainActivity extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         int menuId = R.menu.main;
-        /*if (currentFragment instanceof HomeFragment) {
+        if (currentFragment instanceof HPFragment) {
             menuId = R.menu.main;
-        } else if (currentFragment instanceof BookshelfFragment) {
-            //menuId = R.menu.bookshelf_main;
-        } else if (currentFragment instanceof EBookFragment) {
-            //menuId = R.menu.ebook_main;
-        }*/
+        } else if (currentFragment instanceof ReadFragment) {
+            menuId = R.menu.menu_read;
+        } else if (currentFragment instanceof MovieFragment) {
+            menuId = R.menu.menu_movie;
+        }
         getMenuInflater().inflate(menuId, menu);
         currentFragment.onCreateOptionsMenu(menu, getMenuInflater());
         return true;
@@ -298,7 +310,8 @@ public class MainActivity extends BaseActivity
             currentIndex = 2;
         } else if (id == R.id.nav_movie) {
             Log.d(TAG,"R.id.nav_movie");
-            switchContent(currentFragment, MovieFragment.newInstance());
+            //switchContent(currentFragment, MovieFragment.newInstance());
+            selectFragment(3);
             currentIndex = 3;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

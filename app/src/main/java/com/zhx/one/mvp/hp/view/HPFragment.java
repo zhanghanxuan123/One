@@ -120,11 +120,7 @@ public class HPFragment extends BaseFragment implements HPView{
         mPresenter.attachView(this);
         mPresenter.getHPIdList();
         ((MainActivity) getActivity()).setToolbar(mToolbar);
-        // Restore State Here
-        /*if (!restoreStateFromArguments()) {
-            // First Time running, Initialize something here
-            init();
-            ((MainActivity) getActivity()).setToolbar(mToolbar);*/
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_hp);
         }
 
 }

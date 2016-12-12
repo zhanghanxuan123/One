@@ -78,17 +78,22 @@ public class ReadListFragment02 extends BaseFragment implements ReadListView, Sw
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), EssayDetailActivity.class);
-                intent.putExtra("id", mList.get(position).getSerial_id());
-                intent.putExtra("type", "essay");
+                intent.putExtra("id", mList.get(position).getId());
+                intent.putExtra("type", "serial");
                 startActivity(intent);
             }
         });
+        mSwipeRefreshWidget.setRefreshing(true);
         mSwipeRefreshWidget.setOnRefreshListener(this);
     }
 
     @Override
     protected void initData(boolean isSavedNull) {
-        
+        if (isSavedNull) {
+            onRefresh();
+        }else {
+
+        }
     }
 
     @Override

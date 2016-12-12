@@ -180,7 +180,7 @@ public class OneFragment extends BaseFragment implements HPDetailView, SwipeRefr
     }
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable("HPDetailEntity",mDetailEntity);
+        //outState.putSerializable("HPDetailEntity",mDetailEntity);
         super.onSaveInstanceState(outState);
         // Save State Here
         //saveStateToArguments();
@@ -202,7 +202,7 @@ public class OneFragment extends BaseFragment implements HPDetailView, SwipeRefr
         Bundle b = getArguments();
         savedState = b.getBundle("bundle");
         if (savedState != null) {
-            restoreState();
+            //restoreState();
             return true;
         }
         return false;
@@ -231,7 +231,7 @@ public class OneFragment extends BaseFragment implements HPDetailView, SwipeRefr
     private Bundle saveState() {
         Bundle state = new Bundle();
         // For Example
-        state.putSerializable("HPDetailEntity",mDetailEntity);
+        //state.putSerializable("HPDetailEntity",mDetailEntity);
         return state;
     }
 }

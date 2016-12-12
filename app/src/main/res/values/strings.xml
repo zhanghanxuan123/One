@@ -107,4 +107,10 @@
     </string>
     <string name="serial">连载</string>
     <string name="question">问题</string>
+    <string name="title_movie">电影</string>
+    <string name="title_read">阅读</string>
+    <string name="title_hp">首页</string>
+    <string name="title_activity_movie_detail">电影</string>
+    <string name="movie_info">信息</string>
+    <string name="movie_photo">剧照</string>
 </resources>

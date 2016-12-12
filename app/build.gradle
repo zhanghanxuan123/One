@@ -40,4 +40,5 @@ dependencies {
     compile 'com.commit451:PhotoView:1.2.4'
     testCompile 'junit:junit:4.12'
     compile 'fm.jiecao:jiecaovideoplayer:4.7.1_preview'
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }

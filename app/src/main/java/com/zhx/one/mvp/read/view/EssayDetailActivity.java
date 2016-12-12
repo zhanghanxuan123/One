@@ -1,6 +1,7 @@
 package com.zhx.one.mvp.read.view;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -17,6 +18,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.zhx.one.R;
 import com.zhx.one.base.BaseActivity;
 import com.zhx.one.bean.CommentEntity;
@@ -84,6 +89,8 @@ public class EssayDetailActivity extends BaseActivity implements ReadDetailView 
     RecyclerView mRvQuestion;
     @BindView(R.id.ll_question)
     LinearLayout mLlQuestion;
+    @BindView(R.id.tv_comment)
+    TextView mTvComment;
 
     private String id;
     private String type;
@@ -106,19 +113,18 @@ public class EssayDetailActivity extends BaseActivity implements ReadDetailView 
         if (type.equals("essay")) {
             setTitle(R.string.essasy);
             mPresenter.getEssayDetail("essay", id);
-            mPresenter.getComment("essay", id);
+            //mPresenter.getComment("essay", id);
 
         } else if (type.equals("serial")) {
             setTitle(R.string.serial);
             mPresenter.getSerailDetail("serial", id);
-            mPresenter.getComment("serial", id);
+            //mPresenter.getComment("serial", id);
         } else if (type.equals("question")) {
             setTitle(R.string.question);
             mPresenter.getQuetionDetail("question", id);
-            mPresenter.getComment("question", id);
+            //mPresenter.getComment("question", id);
         }
         Log.i(TAG, "onCreate");
-
 
     }
 
@@ -126,6 +132,23 @@ public class EssayDetailActivity extends BaseActivity implements ReadDetailView 
     protected void initEvents() {
         Log.i(TAG, "initEvents");
 
+        /*mList = new ArrayList<>();
+        mAdapter01 = new ReadDetailAdapter(this, mList);
+        MyLinearLayoutManager mFullyLinearLayoutManager = new MyLinearLayoutManager(this, LinearLayout.VERTICAL, true);
+        mFullyLinearLayoutManager.setSmoothScrollbarEnabled(true);
+        mRvEssay.setLayoutManager(mFullyLinearLayoutManager);
+        mRvEssay.setNestedScrollingEnabled(false);
+        mRvEssay.setAdapter(mAdapter01);
+
+        mAdapter02 = new ReadDetailAdapter(this, mList);
+        mRvSerial.setLayoutManager(mFullyLinearLayoutManager);
+        mRvSerial.setNestedScrollingEnabled(false);
+        mRvSerial.setAdapter(mAdapter02);
+
+        mAdapter03 = new ReadDetailAdapter(this, mList);
+        mRvQuestion.setLayoutManager(mFullyLinearLayoutManager);
+        mRvQuestion.setNestedScrollingEnabled(false);
+        mRvQuestion.setAdapter(mAdapter03);*/
 
     }
 
@@ -218,6 +241,8 @@ public class EssayDetailActivity extends BaseActivity implements ReadDetailView 
             mRvEssay.setLayoutManager(mFullyLinearLayoutManager);
             mRvEssay.setNestedScrollingEnabled(false);
             mRvEssay.setAdapter(mAdapter);
+            mTvComment.setVisibility(View.VISIBLE);
+            mRvEssay.setVisibility(View.VISIBLE);
 
         } else if (type.equals("serial")) {
             mList = new ArrayList<>();
@@ -228,6 +253,8 @@ public class EssayDetailActivity extends BaseActivity implements ReadDetailView 
             mRvSerial.setLayoutManager(mFullyLinearLayoutManager);
             mRvSerial.setNestedScrollingEnabled(false);
             mRvSerial.setAdapter(mAdapter);
+            mTvComment.setVisibility(View.VISIBLE);
+            mRvSerial.setVisibility(View.VISIBLE);
         } else if (type.equals("question")) {
             mList = new ArrayList<>();
             mList = commentEntity.getData();
@@ -237,7 +264,11 @@ public class EssayDetailActivity extends BaseActivity implements ReadDetailView 
             mRvQuestion.setLayoutManager(mFullyLinearLayoutManager);
             mRvQuestion.setNestedScrollingEnabled(false);
             mRvQuestion.setAdapter(mAdapter);
+            mTvComment.setVisibility(View.VISIBLE);
+            mRvQuestion.setVisibility(View.VISIBLE);
         }
 
     }
+
+
 }

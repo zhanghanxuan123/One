@@ -50,7 +50,7 @@ public class ReadDetailPresenter extends BasePresenter<ReadDetailView>{
                     public void onNext(EssayDetailEntity essayDetailEntity) {
                         Log.i(TAG+"EssayDetailEntity",essayDetailEntity.getData().getGuide_word());
                         getMvpView().getDetailSuccess("essay",essayDetailEntity,null,null);
-                        //getComment(type,id,essayDetailEntity,null,null);
+                        getComment(type,id);
                     }
                 });
     }
@@ -72,9 +72,9 @@ public class ReadDetailPresenter extends BasePresenter<ReadDetailView>{
 
                     @Override
                     public void onNext(SerialDetailEntity serialDetailEntity) {
-                        //Log.i(TAG+"SerialDetailEntity", String.valueOf(serialDetailEntity.getRes()));
+                        Log.i(TAG+"SerialDetailEntity", String.valueOf(serialDetailEntity.getData().getTitle()));
                         getMvpView().getDetailSuccess("serial",null,serialDetailEntity,null);
-                        //getComment(type,id,null,serialDetailEntity,null);
+                        getComment(type,id);
                     }
                 });
     }
@@ -98,7 +98,7 @@ public class ReadDetailPresenter extends BasePresenter<ReadDetailView>{
                     public void onNext(QuestionDetailEntity questionDetailEntity) {
                         //Log.i(TAG+"QuestionDetailEntity",questionDetailEntity.getData().getQuestion_content());
                         getMvpView().getDetailSuccess("question",null,null,questionDetailEntity);
-                        //getComment(type,id,null,null,questionDetailEntity);
+                        getComment(type,id);
 
                     }
                 });

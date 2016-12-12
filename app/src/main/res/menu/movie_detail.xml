@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_movie_info"
+        android:orderInCategory="100"
+        android:title="@string/movie_info"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_movie_info"/>
+
+    <item
+        android:id="@+id/item_movie_photo"
+        android:orderInCategory="100"
+        android:title="@string/movie_photo"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_movie_photo"/>
+
+</menu>

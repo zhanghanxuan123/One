@@ -5,6 +5,9 @@ import com.zhx.one.bean.CommentEntity;
 import com.zhx.one.bean.EssayDetailEntity;
 import com.zhx.one.bean.HPDetailEntity;
 import com.zhx.one.bean.HPIdListEntity;
+import com.zhx.one.bean.MovieDetailEntity;
+import com.zhx.one.bean.MovieListEntity;
+import com.zhx.one.bean.MovieStoryEntity;
 import com.zhx.one.bean.QuestionDetailEntity;
 import com.zhx.one.bean.ReadingListEntity;
 import com.zhx.one.bean.SerialDetailEntity;
@@ -43,5 +46,16 @@ public interface OneService {
 
      @GET("comment/praiseandtime/{read_type}/{id}/0?version=3.5.0&platform=android")
      Observable<JsonObject>getComment(@Path("read_type")String type, @Path("id")String id);
+
+     @GET("movie/list/0?version=3.5.0&platform=android")
+     Observable<MovieListEntity>getMovieListEntity();
+
+     @GET("movie/{id}/story/1/0?version=3.5.0&platform=android")
+     Observable<JsonObject>getMovieStory(@Path("id")String id);
+
+     @GET("movie/detail/{id}?version=3.5.0&platform=android")
+     Observable<MovieDetailEntity>getMovieDetail(@Path("id")String id);
+
+
 
 }

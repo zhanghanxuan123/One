@@ -71,7 +71,7 @@ public class ReadFragment extends BaseFragment{
         super.onActivityCreated(savedInstanceState);
         init();
         ((MainActivity) getActivity()).setToolbar(mToolbar);
-        //mToolbar.setTitle(R.string.hp_title);
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_read);
     }
 
     private void init() {

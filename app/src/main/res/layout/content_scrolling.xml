@@ -16,19 +16,18 @@
 
 
    <LinearLayout
+       android:background="@android:color/white"
        android:visibility="gone"
        android:id="@+id/ll_essay"
        android:paddingTop="15dp"
-       android:background="@android:color/white"
+       android:paddingRight="10dp"
+       android:paddingLeft="10dp"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:paddingLeft="10dp"
-       android:paddingRight="10dp"
        android:orientation="vertical">
 
 
            <LinearLayout
-
                android:layout_width="match_parent"
                android:layout_height="48dp"
                android:orientation="horizontal">
@@ -83,21 +82,7 @@
 
        </WebView>
 
-       <TextView
 
-           android:text="评论列表"
-           android:textSize="18dp"
-           android:layout_marginTop="10dp"
-           android:layout_marginBottom="10dp"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"/>
-
-       <android.support.v7.widget.RecyclerView
-           android:id="@+id/rv_essay"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-
-       </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 
@@ -169,20 +154,7 @@
 
         </WebView>
 
-        <TextView
 
-            android:text="评论列表"
-            android:textSize="18dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_serial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
     <LinearLayout
@@ -257,9 +229,18 @@
             android:layout_height="wrap_content">
 
         </WebView>
-        <TextView
 
+
+
+
+
+    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_comment"
+            android:visibility="gone"
             android:text="评论列表"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:textSize="18dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -267,14 +248,36 @@
             android:layout_height="wrap_content"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_question"
+            android:id="@+id/rv_essay"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_question"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+        </android.support.v7.widget.RecyclerView>
+
+        <!--<TextView
+
+            android:text="评论列表"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_serial"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 
