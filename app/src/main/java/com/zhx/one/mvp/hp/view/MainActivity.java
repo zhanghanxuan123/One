@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.zhx.one.R;
 import com.zhx.one.base.BaseActivity;
@@ -259,8 +260,9 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
+            Toast.makeText(MainActivity.this,"正在施工做",Toast.LENGTH_SHORT).show();
             //showSearchView();
-            startActivity(new Intent(MainActivity.this, Main2Activity.class));
+            //startActivity(new Intent(MainActivity.this, Main2Activity.class));
             return true;
         }
         currentFragment.onOptionsItemSelected(item);
@@ -306,8 +308,9 @@ public class MainActivity extends BaseActivity
             //switchContent(currentFragment, ReadFragment.newInstance());
         } else if (id == R.id.nav_music) {
             Log.d(TAG,"R.id.nav_music");
-            switchContent(currentFragment, MusicFragment.newInstance());
-            currentIndex = 2;
+            Toast.makeText(MainActivity.this,"正在施工做",Toast.LENGTH_SHORT).show();
+            //switchContent(currentFragment, MusicFragment.newInstance());
+            //currentIndex = 2;
         } else if (id == R.id.nav_movie) {
             Log.d(TAG,"R.id.nav_movie");
             //switchContent(currentFragment, MovieFragment.newInstance());
